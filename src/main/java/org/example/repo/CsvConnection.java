@@ -4,13 +4,14 @@ import org.example.entity.Student;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CsvConnection {
     File file = new File("src/main/resources/db.csv");
 
 
-    public ArrayList<Student> getStudents() {
-        ArrayList<String> students = new ArrayList<>();
+    public List<String> getStudents() {
+        List<String> students = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             while ((reader.read()) != -1) {
                 students.add(reader.readLine());
@@ -19,14 +20,16 @@ public class CsvConnection {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return students;
     }
 
-    public void setStudents(String students) {
+    public void setStudents(List<String> students) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
-            writer.write(students);
-            writer.newLine();
+            for (String student : students){
+                writer.write(student);
+                writer.newLine();
+            }
             writer.flush();
 
         } catch (IOException e) {
